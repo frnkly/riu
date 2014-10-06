@@ -4,7 +4,7 @@ header('Content-Disposition: attachment; filename="riu.appcache"');
 header('Cache-Control: no-cache, must-revalidate');
 
 // Definitions
-require 'defines.php';
+require 'definitions.php';
 
 // Version
 $v	= RIU_VER ."\n";

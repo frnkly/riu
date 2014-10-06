@@ -4,7 +4,7 @@ header('Content-Disposition: attachment; filename="riu.webapp"');
 header('Cache-Control: no-cache, must-revalidate');
 
 // Definitions
-require 'defines.php';
+require 'definitions.php';
 
 ?>
 
