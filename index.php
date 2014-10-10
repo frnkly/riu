@@ -12,7 +12,6 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 ?>
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache.php">
-<!-- <html lang="en"> -->
 <head>
 	<title>Riu - The Really Intuitive Unit Converter</title>
 	<meta charset="utf-8">
@@ -36,14 +35,15 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 	<link rel="apple-touch-icon" sizes="72x72" href="assets/riu.72x72.png" />
 	<link rel="apple-touch-icon" sizes="112x112" href="assets/riu.112x112.png" />
 	<link rel="apple-touch-icon" sizes="144x144" href="assets/riu.144x144.png" />
-	<!-- <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300' type='text/css' /> -->
-	<link rel="stylesheet" type="text/css" href="assets/style.font.css?<?php echo RIU_VER; ?>" />
+	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300' type='text/css' />
 	<link rel="stylesheet" type="text/css" href="assets/style.app.css?<?php echo RIU_VER; ?>" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/script.app.min.js?<?php echo RIU_VER; ?>"></script>
 	<script type="text/javascript" src="assets/script.units.min.js?<?php echo RIU_VER; ?>"></script>
 </head>
 <body>
+	
+	<!-- Input form -->
 	<section id="box">
 		<span id="r"></span>
 		<form onsubmit="App.go(); return false;">
@@ -56,6 +56,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 		</form>
 	</section>
 	
+	<!-- About this tool -->
 	<section class="info pop" id="abt-tool">
 		<div>
 			<span class="x">x</span>
@@ -63,9 +64,11 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 			<div><?php echo RIU_DESC; ?></div>
 			<div><?php echo RIU_UNITS; ?></div>
 			<div>Francis Amankrah &copy; <?php echo date('Y'); ?></div>
+			<div><a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License</a></div>
 		</div>
 	</section>
 	
+	<!-- About the author -->
 	<section class="info pop" id="abt-author">
 		<div>
 			<span class="x">x</span>
@@ -75,6 +78,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 		</div>
 	</section>
 	
+	<!-- Go offline -->
 	<section class="info pop" id="go-offline">
 		<div>
 			<span class="x">x</span>
@@ -84,6 +88,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 		</div>
 	</section>
 	
+	<!-- Explanation of unit conversion -->
 	<section class="info pop" id="explanation-div">
 		<div>
 			<span class="x">x</span>
@@ -92,6 +97,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 		</div>
 	</section>
 	
+	<!-- Windows Phone tile -->
 	<div id="w8-tile" class="pop"></div>
 	
 	<a href="#" id="links-btn" onclick="$('#links-btn').slideUp(300);$('#links').slideDown(300);" class="btn"></a>

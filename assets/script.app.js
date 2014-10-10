@@ -53,12 +53,17 @@ var App =
 		if (q.indexOf(' per ') > -1)	q = q.replace(/\s+per\s+/ig, '/');
 		if (q.indexOf('mph') > -1)		q = q.replace(/mph/ig, 'miles/hour');
 		
-		// Special case: 6'7"
+		// Special case: 5'10"
 		var v, u1, u2;
-		if (q.indexOf('\'') > -1 || q.indexOf('"') > -1)
+		if (q.indexOf('\'') > -1)
 		{
-			var m	= q.match(/([0-9]+)'\s?([0-9]+)" ([a-z\-]+)/i);
+			// Match: 5'10" or 5'10'' or 5'10 or 5'
+			var m	= q.match(/^([0-9]+)'\s?([0-9]+)?(?:"|'')?[ ]?(?:[a-z\-\/\^\s]+ )?([a-z\-]+)/i);
 			
+			// Fix case: 5' (no inches)
+			m[2]	= m[2] || 0;
+			
+			// Prepare conversion
 			v	= parseInt(m[1], 10) + parseFloat(m[2]/12, 10);
 			u1	= 'ft';
 			u2	= m[3];
@@ -68,12 +73,10 @@ var App =
 		else
 		{
 			// Get conversion details
-			//var reg = /^([0-9\.,]+(?:\.[0-9]+)?)[ ]?([a-z\-\/\^]+)[ ]?(?:[a-z\-\/\^\s]+ )?([a-z\-\/\^]+)$/i;
-			var reg = /^([0-9\.,\s]+(?:\.[0-9]+)?)[ ]?([a-z\-\/\^]+)[ ]?(?:[a-z\-\/\^\s]+ )?([a-z\-\/\^]+)$/i;
-			var m	= q.match(reg);
+			var m	= q.match(/^([0-9\.,\s]+(?:\.[0-9]+)?)[ ]?([a-z\-\/\^]+)[ ]?(?:[a-z\-\/\^\s]+ )?([a-z\-\/\^]+)$/i);
 			if (!m) return this.abort('What do you want to convert?');
 			
-			v	= parseFloat(m[1].replace(',', ''), 10);
+			v	= parseFloat(m[1].replace(/[,\s]+/g, ''), 10);
 			u1	= m[2];
 			u2	= m[3];
 		}

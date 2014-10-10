@@ -1,4 +1,6 @@
 <?php
+
+// Headers
 header('Content-type: text/cache-manifest');
 header('Content-Disposition: attachment; filename="riu.appcache"');
 header('Cache-Control: no-cache, must-revalidate');
@@ -12,7 +14,7 @@ $v	= RIU_VER ."\n";
 // See http://www.html5rocks.com/en/tutorials/appcache/beginner/
 ?>
 CACHE MANIFEST
-# 2014-08-02 102
+# 2014-09-10 103
 
 # Explicitly cached 'master entries'
 CACHE:
@@ -31,5 +33,8 @@ assets/riu.72x72.png
 assets/riu.112x112.png
 assets/riu.144x144.png
 assets/riu.white.png
+http://fonts.googleapis.com/css?family=Lato:300
 http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 
+NETWORK:
+*
