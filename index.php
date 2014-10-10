@@ -63,8 +63,10 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 			<h1>Riu <span>(v. <?php echo RIU_VER; ?>)</span></h1>
 			<div><?php echo RIU_DESC; ?></div>
 			<div><?php echo RIU_UNITS; ?></div>
-			<div>Francis Amankrah &copy; <?php echo date('Y'); ?></div>
-			<div><a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License</a></div>
+			<div style="text-align: center;">
+				Francis Amankrah &copy; <?php echo date('Y'); ?><br />
+				<a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License</a>
+			</div>
 		</div>
 	</section>
 	

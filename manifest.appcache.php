@@ -14,7 +14,7 @@ $v	= RIU_VER ."\n";
 // See http://www.html5rocks.com/en/tutorials/appcache/beginner/
 ?>
 CACHE MANIFEST
-# 2014-09-10 103
+# 2014-09-10 104
 
 # Explicitly cached 'master entries'
 CACHE:
