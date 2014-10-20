@@ -64,7 +64,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 			<div><?php echo RIU_DESC; ?></div>
 			<div><?php echo RIU_UNITS; ?></div>
 			<div style="text-align: center;">
-				Francis Amankrah &copy; <?php echo date('Y'); ?><br />
+				<a href="http://frnk.ca/" target="_blank">Francis Amankrah</a> &copy; <?php echo date('Y'); ?><br />
 				<a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License</a>
 			</div>
 		</div>
@@ -86,7 +86,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 			<span class="x">x</span>
 			<h1>Go offline</h1>
 			<div>Link: <a href="http://frnk.ca/app/riu" type="text/html">frnk.ca / app / riu</a></div>
-			<div>To use this app offline, just bookmark this page on your phone or tablet and add it to your homescreen. If you're on a Windows Phone, you can click on <em class="w8"></em> for a nice tile image.</div>
+			<div>To use this app offline, simply bookmark this page on your phone or tablet and add it to your homescreen. If you're on a Windows Phone, you can click on <em class="w8"></em> for a nice tile image.</div>
 		</div>
 	</section>
 	
@@ -107,9 +107,11 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 		<a href="#" id="tool">
 			<span>about this tool</span>
 		</a>
+<!--
 		<a href="#" id="author">
 			<span>about the author</span>
 		</a>
+-->
 		<a href="#" id="offline">
 			<span>go offline</span>
 		</a>
