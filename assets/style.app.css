@@ -1,3 +1,10 @@
+/**
+ * App styles
+ *
+ * @author Francis Amankrah <frank@frnk.ca>
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ */
+
 html, body, #box, section, a {
 	margin: 0;
 	padding: 0;

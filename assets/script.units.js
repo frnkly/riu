@@ -7,70 +7,128 @@
 
 var Units =
 {
-	getUnit : function(str, skipComposed, checkPlurals)
+	convert : function(value, from, to)
+	{
+		this.log('Converting '+ value +' from '+ from +' to '+ to);
+		
+		// Input unit
+		var fromUnit = this.getUnit(from);
+		if (!fromUnit)
+			return from +'? We don\'t recognize that :/';
+		
+		// Check output unit
+		var toUnit = this.getUnit(to);
+		if (!toUnit)
+			return to +'? We don\'t recognize that :/';
+		
+		// Check that both units match
+		if (fromUnit.base != toUnit.base)
+			return 'Can\'t convert '+ fromUnit.type +' to '+ toUnit.type +'...';
+		
+		// Get conversion
+		var raw;
+		switch (fromUnit.conv)
+		{
+			case 'composed':
+				raw = this.convertComposedUnit(value, fromUnit, toUnit);
+				break;
+			
+			case 'exponent':
+			default:
+				raw = this.convertSimpleUnit(value, fromUnit, toUnit);
+		}
+		
+		// Check for errors
+		if (typeof raw == 'string')
+			return raw;
+		
+		// Format result
+		var oneFrom = this.format(raw.targetUnit.factor / raw.originalUnit.factor, 6);	// One unit of "from" in "to
+		var oneTo = this.format(raw.originalUnit.factor / raw.targetUnit.factor, 6);	// One unit of "to" in "from"
+		var result = {
+			text: raw.text,
+			explanation:
+				'Units of <em>'+ raw.unitType +'</em><br />'+
+				'1 '+ raw.originalUnit.name +' = '+ oneFrom +' '+ raw.targetUnit.name +'<br />'+
+				'1 '+ raw.targetUnit.name +' = '+ oneTo +' '+ raw.originalUnit.name
+		};
+		
+		return result;
+	},
+	
+	getUnit : function(str, skipComposed, skipPlurals)
 	{
 		// Performance check
 		if (!str) return false;
 		
 		// Composed units
+		// Check first if the composed unit is already explicitly defined
+		// before attempting conversion using division
 		if (!skipComposed)
 		{
-			// Check first if the composed unit is already explicitly defined
-			// before attempting conversion using division
+			// Multiplications
 			if (str.indexOf('*') > -1) {
 				var x	= this.getUnit(str, true);
-				return (x[0]) ? x : this.getComposedUnit(str, '*');
+				return (x && x.unit) ? x : this.getComposedUnit(str, '*');
 			}
 			
+			// Divisions
 			if (str.indexOf('/') > -1) {
 				var x	= this.getUnit(str, true);
-				return (x[0]) ? x : this.getComposedUnit(str, '/');
+				return (x && x.unit) ? x : this.getComposedUnit(str, '/');
+			}
+			
+			// Exponents
+			var test = str.match(/([a-z]+)[\^]?([0-9]+)/i);
+			if (test) {
+				var x	= this.getUnit(str, true);
+				return (x && x.unit) ? x : this.getPowerUnit(test[1], test[2]);
 			}
 		}
 		
 		// Loop through units array
-		var found = [];
+		var found = {};
 		var units = this.Descriptions;
-		for (var uDesc in units)
+		for (var type in units)
 		{
-			if (uDesc == 'conversionType') continue;
-			if (uDesc == 'conversion') continue;
+			if (type == 'conversionType') continue;
+			if (type == 'conversion') continue;
 			
 			// Loop through unit descriptor for specific units (e.g. Pa, km, mg)
-			for (var name in units[uDesc])
+			for (var name in units[type])
 			{
 				if (name == 'info') continue;
 				
 				// Check unit name and alternate names
-				if (str == name || ($.inArray(str, units[uDesc][name]) > -1))
-					found[0] = name;
+				if (str == name || ($.inArray(str, units[type][name]) > -1))
+					found.abbr = name;
 				
 				// Handle plurals
-				if (checkPlurals && units[uDesc].info.plural && !found[0] && str.substr(str.length-1) == 's')
-					if ($.inArray(str.substr(0, str.length-1), units[uDesc][name]) > -1)
-						found[0] = name;
+				if (!skipPlurals && units[type].info.plural && !found.abbr && str.substr(str.length-1) == 's')
+					if ($.inArray(str.substr(0, str.length-1), units[type][name]) > -1)
+						found.abbr = name;
 				
 				// Save unit information
-				if (found[0])
+				if (found.abbr)
 				{
-					found[1]	= uDesc;					// Unit type
-					found[2]	= units[uDesc].info.base;	// Base conversion unit
-					found[3]	= units[uDesc][name][0];	// Full name
-					found[4]	= 'auto';
+					found.type = type;					// Type of unit
+					found.base = units[type].info.base;	// Base conversion unit
+					found.name = units[type][name][0];	// Full name
+					found.conv = 'auto';				// Conversion handler
+					found.power = 1;
 					break;
 				}
 			}
 			
-			if (found[0]) break;
+			if (found.abbr) break;
 		}
 		
 		// Return unit details
-		if (found[0])
+		if (found.abbr)
 			return found;
 		
-		// Try again with plurals, or return false
-		// TODO: is this useful at all?
-		return checkPlurals ? false : this.getUnit(str, skipComposed, true);
+		// Could not identify unit
+		return this.log('Could not identify unit "'+ str +'"');
 	},
 	
 	getComposedUnit : function(str, operator)
@@ -86,127 +144,109 @@ var Units =
 		for (var i in first)
 			unit[i]	= first[i] + operator + second[i];
 		
-		unit[4] = 'composed';
+		unit.conv = 'composed';
 		
 		return unit;
 	},
 	
-	convert : function(value, from, to)
+	getPowerUnit: function(str, power)
 	{
-		this.log('Converting '+ value +' from '+ from +' to '+ to);
+		// Get unit details
+		var unit = this.getUnit(str);
+		if (!unit) return false;
+		unit.conv = 'exponent';
+		unit.power = power;
 		
-		// Check input unit
-		var fromUnit = this.getUnit(from);
-		if (!fromUnit)
-			return from +'? We don\'t recognize that :/';
-		
-		// Check output unit
-		var toUnit = this.getUnit(to);
-		if (!toUnit)
-			return to +'? We don\'t recognize that :/';
-		
-		// Check that both units match
-		if (fromUnit[2] != toUnit[2])
-			return 'Can\'t convert '+ fromUnit[1] +' to '+ toUnit[1] +'...';
-		
-		// Get conversion
-		var raw;
-		switch (toUnit[4])
-		{
-			case 'composed':
-				raw = this.convertComposedUnit(value, fromUnit[0], toUnit[0], toUnit[2]);
-				break;
-			
-			default:
-				raw = this.convertSimpleUnit(value, fromUnit[0], toUnit[0], toUnit[2]);
-		}
-		
-		// Format result
-		var result = {};
-		result.text = raw[0];
-		
-		// Add explanation
-		if (raw[1] && raw[2]) {
-			result.explanation =
-				'Units of <em>'+ toUnit[1] +'</em><br />'+
-				'1 '+ fromUnit[3] +' = '+ raw[1] +' '+ toUnit[3] +'<br />'+
-				'1 '+ toUnit[3] +' = '+ raw[2] +' '+ fromUnit[3];
-		}
-		
-		// Add note
-		if (raw[3])
-			result.note = raw[3];
-		
-		return result;
+		return unit;
 	},
 	
 	// Simple conversion
-	// Returns: Array(result string, 1 fromUnits in toUnits, vice-versa, note)
-	convertSimpleUnit: function(value, from, to, base)
-	{
-		// Convert value
+	convertSimpleUnit: function(value, fromUnit, toUnit) {
+		this.log('Conversion type: simple');
+		
+		// Initialize result object
+		var raw = {
+			power: fromUnit.power,
+			originalUnit: {
+				value: this.format(value)
+			},
+			targetUnit: {}
+		};
+		
+		// Do conversion
 		var Units = this.Descriptions.conversion;
-		var converted = this.format(value / Units[base][from] * Units[base][to]);
+		raw.originalUnit.factor = Math.pow(Units[fromUnit.base][fromUnit.abbr], raw.power);
+		raw.targetUnit.factor = Math.pow(Units[toUnit.base][toUnit.abbr], raw.power);
+		raw.targetUnit.value = this.format(value / raw.originalUnit.factor * raw.targetUnit.factor);
 		
 		// Catch conversion errors
-		if (isNaN(converted))
-			return ['Internal error :/', false, false, false];
+		if (isNaN(raw.targetUnit.value))
+			return 'Internal error :/';
 		
-		// Conversion results
-		var equalSign = base == 's' ? ' &#8776; ' : ' = ';
-		var result = this.format(value) +' '+ from + equalSign + converted +' '+ to;
+		// Format original unit
+		var powerCheck = (raw.power > 1);
+		raw.originalUnit.abbr = fromUnit.abbr + (powerCheck ? '<sup>'+ raw.power +'</sup>' : '');
+		raw.originalUnit.name = fromUnit.name + (powerCheck ? '<sup>'+ raw.power +'</sup>' : '');
 		
-		// One unit of "from" in "to
-		var oneFrom = this.format(Units[base][to] / Units[base][from], 6);
+		// Format target unit
+		raw.targetUnit.abbr = toUnit.abbr + (powerCheck ? '<sup>'+ raw.power +'</sup>' : '');
+		raw.targetUnit.name = toUnit.name + (powerCheck ? '<sup>'+ raw.power +'</sup>' : '');
 		
-		// One unit of "to" in "from"
-		var oneTo = this.format(Units[base][from] / Units[base][to], 6);
+		// Format result
+		var equalSign = fromUnit.base == 's' ? ' &#8776; ' : ' = ';
+		raw.unitType = fromUnit.type + (powerCheck ? '<sup>'+ raw.power +'</sup>' : '');
+		raw.text = raw.originalUnit.value +' '+ raw.originalUnit.abbr + equalSign + raw.targetUnit.value +' '+ raw.targetUnit.abbr;
 		
-		// TODO: introduce notes if necessary
-		var note = false;
-		
-		return [result, oneFrom, oneTo, note];
+		return raw;
 	},
 	
-	convertComposedUnit: function(value, from, to, base)
-	{
+	convertComposedUnit: function(value, fromUnit, toUnit) {
+		this.log('Conversion type: composed');
+		
 		// Get operator
 		var operator;
-		if (base.indexOf('/') > -1) {
+		if (fromUnit.base.indexOf('/') > -1) {
 			operator	= '/';
-		} else if (base.indexOf('*') > -1) {
+		} else if (fromUnit.base.indexOf('*') > -1) {
 			operator	= '*';
 		} else {
-			return ['Internal error :/', false, false, false];
+			return 'Internal error :/';
 		}
 		
-		// Get conversion factors
-		var F = from.split(operator);
-		var T = to.split(operator);
-		var B = base.split(operator);
+		// Initialize some variables
+		var O = fromUnit.abbr.split(operator);
+		var T = toUnit.abbr.split(operator);
+		var B = fromUnit.base.split(operator);
 		var Units = this.Descriptions.conversion;
-		var numeratorFactor = Units[B[0]][T[0]] / Units[B[0]][F[0]];
-		var denominatorFactor = Units[B[1]][F[1]] / Units[B[1]][T[1]];
+		var raw = {
+			power: 1,
+			originalUnit: {
+				value: this.format(value)
+			},
+			targetUnit: {}
+		};
 		
-		// Convert value
-		var converted = this.format(value * numeratorFactor * denominatorFactor);
+		// Do conversion
+		raw.originalUnit.factor = 1 / eval((1/Units[B[0]][O[0]]) + operator + (1/Units[B[1]][O[1]]));
+		raw.targetUnit.factor = eval(Units[B[0]][T[0]] + operator + Units[B[1]][T[1]]);
+		raw.targetUnit.value = this.format(value / raw.originalUnit.factor * raw.targetUnit.factor);
 		
 		// Catch conversion errors
-		if (isNaN(converted)) return ['Internal error :/', false, false, false];
+		if (isNaN(raw.targetUnit.value)) return 'Internal error :/';
 		
-		// Conversion results
-		var result = this.format(value) +' '+ from +' = '+ converted +' '+ to;
+		// Format original unit
+		raw.originalUnit.abbr = fromUnit.abbr;
+		raw.originalUnit.name = fromUnit.name;
 		
-		// One unit of "from" in "to
-		var oneFrom = this.format(numeratorFactor * denominatorFactor, 6);
+		// Format target unit
+		raw.targetUnit.abbr = toUnit.abbr;
+		raw.targetUnit.name = toUnit.name;
 		
-		// One unit of "to" in "from"
-		var oneTo = this.format((1/numeratorFactor) * (1/denominatorFactor), 6);
+		// Format result
+		raw.unitType = fromUnit.type;
+		raw.text = raw.originalUnit.value +' '+ raw.originalUnit.abbr +' = '+ raw.targetUnit.value +' '+ raw.targetUnit.abbr;
 		
-		// TODO: introduce notes if necessary
-		var note = false;
-		
-		return [result, oneFrom, oneTo, note];
+		return raw;
 	},
 	
 	format : function(value, digits)
@@ -237,7 +277,7 @@ var Units =
 	
 	log: function(msg) {
 		if (console)
-			console.log('Riu/Units: '+ msg);
+			console.log('Units.js - '+ msg);
 		
 		return false;
 	},
@@ -400,7 +440,7 @@ var Units =
 			
 			Torr : ['torr'],
 			
-			PSI : ['psi'],
+			psi : ['psi'],
 			fbar : ['femtobar'],
 			pbar : ['picobar'],
 			nbar : ['nanobar'],
@@ -598,7 +638,7 @@ var Units =
 				
 				Torr : .0075006167382,
 				
-				PSI : 0.000145037738,
+				psi : 0.000145037738,
 				fbar : 10000000000,
 				pbar : 10000000,
 				nbar : 10000,

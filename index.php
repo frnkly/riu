@@ -36,7 +36,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 	<link rel="apple-touch-icon" sizes="112x112" href="assets/riu.112x112.png" />
 	<link rel="apple-touch-icon" sizes="144x144" href="assets/riu.144x144.png" />
 	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300' type='text/css' />
-	<link rel="stylesheet" type="text/css" href="assets/style.app.css?<?php echo RIU_VER; ?>" />
+	<link rel="stylesheet" type="text/css" href="assets/style.app.min.css?<?php echo RIU_VER; ?>" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/script.app.min.js?<?php echo RIU_VER; ?>"></script>
 	<script type="text/javascript" src="assets/script.units.min.js?<?php echo RIU_VER; ?>"></script>
@@ -49,7 +49,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 		<form onsubmit="App.go(); return false;">
 			<div id="input">
 				<input name="clear" type="button" value="x" onclick="App.reset()" />
-				<input name="q" type="text" placeholder="e.g. 7 miles in km..." value="<?php echo $q; ?>" autocomplete="off" />
+				<input name="q" type="text" placeholder="e.g. 8 cm cubed in inches..." value="<?php echo $q; ?>" autocomplete="off" />
 				<div class="clr"></div>
 			</div>
 			<a href="#" onclick="App.go();"></a>

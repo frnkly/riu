@@ -14,14 +14,13 @@ $v	= RIU_VER ."\n";
 // See http://www.html5rocks.com/en/tutorials/appcache/beginner/
 ?>
 CACHE MANIFEST
-# 2014-10-20
+# 2014-10-22 100
 
 # Explicitly cached 'master entries'
 CACHE:
 defines.php
 index.php
-assets/style.app.css?<?php echo $v; ?>
-assets/style.font.css?<?php echo $v; ?>
+assets/style.app.min.css?<?php echo $v; ?>
 assets/script.app.min.js?<?php echo $v; ?>
 assets/script.units.min.js?<?php echo $v; ?>
 assets/32.more.png

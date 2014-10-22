@@ -7,9 +7,13 @@
 
 var App =
 {
-	result : {},
+	Result: {},
+	Regex: {
+		query: /^([0-9\.,\s]+(?:\.[0-9]+)?)[ ]?([a-z\-\*\/\^0-9]+)[ ]?(?:[a-z\-*\/\^\s]+ )?([a-z\-*\/\^0-9]+)$/i,
+		queryFeet: /^([0-9]+)'\s?([0-9]+)?(?:"|'')?[ ]?(?:[a-z\-\/\^\s]+ )?([a-z\-]+)/i
+	},
 	
-	init : function()
+	init: function()
 	{
 		// Solve query
 		if ($('input[name="q"]').val().length > 0) this.go();
@@ -21,7 +25,7 @@ var App =
 		this.message('Riu.');
 	},
 	
-	go : function(i)
+	go: function(i)
 	{
 		// Performance check
 		var q	= i || $('input[name="q"]').val();
@@ -32,18 +36,14 @@ var App =
 		this.guess();
 		
 		// Display result
-		if (typeof this.result == 'object')
+		if (typeof this.Result == 'object')
 		{
-			var msg = this.result.text;
-			
-			// Add link to explanation
-			if (this.result.explanation) {
-				msg += ' <a href="#" onclick="App.box(\'#explanation-div\');">?</a>';
-				$('#explanation').html(this.result.explanation);
-			}
+			// Format results, add link to explanation
+			var msg = this.Result.text +' <a href="#" onclick="App.box(\'#explanation-div\');">?</a>';
+			$('#explanation').html(this.Result.explanation);
 			
 			// TODO: add notes
-			if (this.result.note) {
+			if (this.Result.note) {
 				// ...
 			}
 			
@@ -51,14 +51,14 @@ var App =
 		}
 	},
 	
-	guess : function()
+	guess: function()
 	{
 		// Retrieve query
 		var q = $('input[name="q"]').val();
 		this.log('New query "'+ q +'"');
 		
 		// Remove whitespace and invalid characters
-		// Operators: + - * · (\u00B7) × (\u00D7) /
+		// Operators: + - * · (\u00B7) × (\u00D7) / ^ ' "
 		q = q.replace(/^\s+|^[a-z\s]+|\s+$|[^a-z0-9\.,*\u00B7\u00D7\/\-\^'"`\s]+/ig, '');
 		q = q.replace(/\s+/g, ' ');
 		if (q.length < 1)
@@ -69,46 +69,48 @@ var App =
 		if (q.indexOf('..') > -1)		q = q.replace(/\.+/g, '.');
 		if (q.indexOf(' per ') > -1)	q = q.replace(/\s+per\s+/ig, '/');
 		if (q.indexOf('mph') > -1)		q = q.replace(/mph/ig, 'miles/hour');
+		if (q.indexOf(' square') > -1)	q = q.replace(/\s+squared?/ig, '^2 ');
+		if (q.indexOf(' cube') > -1)	q = q.replace(/(\s+cubed?)/ig, '^3 ');
 		if (q.indexOf('·') > -1)		q = q.replace(/\u00B7/g, '*');
 		if (q.indexOf('×') > -1)		q = q.replace(/\u00D7/g, '*');
 		
 		// Special case: 5'10"
-		var v, u1, u2;
+		var value, fromUnit, toUnit;
 		if (q.indexOf('\'') > -1)
 		{
 			// Match: 5'10" or 5'10'' or 5'10 or 5'
-			var m	= q.match(/^([0-9]+)'\s?([0-9]+)?(?:"|'')?[ ]?(?:[a-z\-\/\^\s]+ )?([a-z\-]+)/i);
+			var m = q.match(this.Regex.queryFeet);
 			
 			// Fix case: 5' (no inches)
-			m[2]	= m[2] || 0;
+			m[2] = m[2] || 0;
 			
 			// Prepare conversion
-			v	= parseInt(m[1], 10) + parseFloat(m[2]/12, 10);
-			u1	= 'ft';
-			u2	= m[3];
+			value = parseInt(m[1], 10) + parseFloat(m[2]/12, 10);
+			fromUnit = 'ft';
+			toUnit = m[3];
 		}
 		
 		// Normal conversion
 		else
 		{
 			// Get conversion details
-			var m	= q.match(/^([0-9\.,\s]+(?:\.[0-9]+)?)[ ]?([a-z\-\*\/\^]+)[ ]?(?:[a-z\-*\/\^\s]+ )?([a-z\-*\/\^]+)$/i);
+			var m = q.match(this.Regex.query);
 			if (!m) return this.abort('What do you want to convert?');
 			
-			v	= parseFloat(m[1].replace(/[,\s]+/g, ''), 10);
-			u1	= m[2];
-			u2	= m[3];
+			value = parseFloat(m[1].replace(/[,\s]+/g, ''), 10);
+			fromUnit = m[2];
+			toUnit = m[3];
 		}
 		
 		// Attempt conversion
-		this.result = Units.convert(v, u1, u2);
-		if (typeof this.result == 'string')
-			return this.abort(this.result);
+		this.Result = Units.convert(value, fromUnit, toUnit);
+		if (typeof this.Result == 'string')
+			return this.abort(this.Result);
 		
 		// Add a little formatting for multiplications
-		if (this.result.text.indexOf('*') > -1) {
-			this.result.text = this.result.text.replace(/\*/g, '&#183;');
-			this.result.explanation = this.result.explanation.replace(/\*/g, ' &#215; ');
+		if (this.Result.text.indexOf('*') > -1) {
+			this.Result.text = this.Result.text.replace(/\*/g, '&#183;');
+			this.Result.explanation = this.Result.explanation.replace(/\*/g, ' &#215; ');
 		}
 		
 		// TODO: add a little formatting for exponents
@@ -123,18 +125,14 @@ var App =
 	
 	reset: function(noFocus) {
 		this.message('Riu.');
-		this.result	= {};
+		this.Result	= {};
 		if (!noFocus) $('input[name="q"]').val('').focus();
 	},
 	
 	abort: function(msg, silent) {
-		// Abort
-		this.result	= {};
-		
-		// Reset form
 		if (!silent) this.reset();
 		
-		// Abort with message
+		// Display message
 		if (typeof msg == 'string' && msg.length > 0)
 			this.message(msg);
 		
@@ -142,8 +140,7 @@ var App =
 	},
 	
 	log: function(msg) {
-		if (console)
-			console.log('Riu/App: '+ msg);
+		if (console) console.log('App.js - '+ msg);
 	}
 };
 
