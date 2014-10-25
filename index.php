@@ -40,6 +40,12 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="assets/script.app.min.js?<?php echo RIU_VER; ?>"></script>
 	<script type="text/javascript" src="assets/script.units.min.js?<?php echo RIU_VER; ?>"></script>
+<?php
+	// Include analytics code
+	if (file_exists('analytics.php')) {
+		require 'analytics.php';
+	}
+?>
 </head>
 <body>
 	
@@ -117,8 +123,6 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 		</a>
 		<a href="#" id="w8" class="w8" onclick="$('#w8-tile').slideDown(300)"></a>
 	</section>
-
-<!-- Analytics -->
 </body>
 </html>
 
