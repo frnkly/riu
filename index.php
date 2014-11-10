@@ -13,28 +13,40 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache.php">
 <head>
-	<title>Riu - The Really Intuitive Unit Converter</title>
+	<title>Riu - The Really Intuitive Unit converter</title>
 	<meta charset="utf-8">
 	<meta name="author" content="Francis Amankrah" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 	<meta name="description" content="<?php echo RIU_DESC; ?> <?php echo RIU_UNITS; ?>" />
 	<meta name="keywords" content="riu, unit converter, wolfram alpha" />
 	<meta name="robots" content="index, follow" />
-	<meta name="msapplication-TileImage" content="assets/riu.white.png"/>
-	<meta name="msapplication-TileColor" content="#26535D"/>
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-	<meta property="og:title" content="Riu - The Really Intuitive Unit Converter" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="http://frnk.ca/app/riu/" />
-	<meta property="og:desc" content="<?php echo RIU_DESC; ?>" />
-	<meta property="og:image" content="assets/riu.144x144.png" />
 	<link rel="canonical" href="http://frnk.ca/app/riu/" />
-	<link rel="shortlink" type="text/html" href="http://frnk.ca/app/riu" />
-	<link rel="shortcut icon" type="image/x-icon" href="assets/r.blue.ico" />
-	<link rel="apple-touch-icon" sizes="72x72" href="assets/riu.72x72.png" />
-	<link rel="apple-touch-icon" sizes="112x112" href="assets/riu.112x112.png" />
-	<link rel="apple-touch-icon" sizes="144x144" href="assets/riu.144x144.png" />
+	<link rel="shortlink" type="text/html" href="http://frnk.ca/app/riu/" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/r.ico" />
+	
+	<!-- App data -->
+	<meta name="application-name" content="Riu.">
+	<meta name="msapplication-tooltip" content="The Really Intuitive Unit converter">
+	<meta name="msapplication-starturl" content="http://frnk.ca/app/riu/">
+	<meta name="msapplication-TileColor" content="#26535D">
+	<meta name="msapplication-TileImage" content="assets/riu.transparent.144x144.png">
+	<meta name="msapplication-square70x70logo" content="assets/riu.70x70.png">
+	<meta name="msapplication-square150x150logo" content="assets/riu.150x150.png">
+	<meta name="msapplication-square310x310logo" content="assets/riu.310x310.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="apple-touch-icon" sizes="70x70" href="assets/riu.70x70.png">
+	<link rel="apple-touch-icon" sizes="150x150" href="assets/riu.150x150.png">
+	<link rel="apple-touch-icon" sizes="310x310" href="assets/riu.310x310.png">
+	<link rel="apple-touch-startup-image" href="assets/riu.320x480.png">
+	<meta property="og:title" content="Riu - The Really Intuitive Unit Converter">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="http://frnk.ca/app/riu/">
+	<meta property="og:desc" content="<?php echo RIU_DESC; ?>">
+	<meta property="og:image" content="assets/riu.310x310.png">
+	
+	<!-- Other scripts -->
 	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300' type='text/css' />
 	<link rel="stylesheet" type="text/css" href="assets/style.app.min.css?<?php echo RIU_VER; ?>" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
