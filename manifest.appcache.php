@@ -18,7 +18,7 @@ CACHE MANIFEST
 
 # Explicitly cached 'master entries'
 CACHE:
-defines.php
+definitions.php
 index.php
 assets/style.app.min.css?<?php echo $v; ?>
 assets/script.app.min.js?<?php echo $v; ?>
