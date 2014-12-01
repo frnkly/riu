@@ -2,7 +2,7 @@
  * Unit handling
  *
  * @author Francis Amankrah <frank@frnk.ca>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ * @license https://www.mozilla.org/MPL/2.0/ Mozilla Public License v2.0
  */
 
 var Lang =

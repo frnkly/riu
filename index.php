@@ -1,19 +1,26 @@
 <?php
+/**
+ * Riu App
+ *
+ * @author Francis Amankrah <frank@frnk.ca>
+ * @license https://www.mozilla.org/MPL/2.0/ Mozilla Public License v2.0
+ */
 
-// Some definitions
+
+// Retrieve app definitions
 require 'definitions.php';
 
-// Some headers
-header('Link: <http://frnk.ca/app/riu>; rel="shortlink"');
+// Send shortlink as a header
+header('Link: <'. RIU_LINK .'>; rel="shortlink"');
 
-// Query
+// Retrieve query from request
 $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']) : '';
 
 ?>
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache.php">
 <head>
-	<title>Riu - The Really Intuitive Unit converter</title>
+	<title><?php echo RIU_TITLE; ?></title>
 	<meta charset="utf-8">
 	<meta name="author" content="Francis Amankrah" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -21,7 +28,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 	<meta name="keywords" content="riu, unit converter, wolfram alpha" />
 	<meta name="robots" content="index, follow" />
 	<link rel="canonical" href="http://frnk.ca/app/riu/" />
-	<link rel="shortlink" type="text/html" href="http://frnk.ca/app/riu/" />
+	<link rel="shortlink" type="text/html" href="<?php echo RIU_LINK; ?>" />
 	<link rel="shortcut icon" type="image/x-icon" href="assets/r.ico" />
 	
 	<!-- App data -->
@@ -48,15 +55,13 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 	
 	<!-- Other scripts -->
 	<link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Lato:300' type='text/css' />
-	<link rel="stylesheet" type="text/css" href="assets/style.app.min.css?<?php echo RIU_VER; ?>" />
+	<link rel="stylesheet" type="text/css" href="assets/style.app.min.css?<?php echo VER; ?>" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script type="text/javascript" src="assets/script.app.min.js?<?php echo RIU_VER; ?>"></script>
-	<script type="text/javascript" src="assets/script.units.min.js?<?php echo RIU_VER; ?>"></script>
+	<script type="text/javascript" src="assets/script.app.min.js?<?php echo VER; ?>"></script>
+	<script type="text/javascript" src="assets/script.units.min.js?<?php echo VER; ?>"></script>
 <?php
 	// Include analytics code
-	if (file_exists('analytics.php')) {
-		require 'analytics.php';
-	}
+	file_exists('analytics.php') ? require 'analytics.php' : null;
 ?>
 </head>
 <body>
@@ -78,7 +83,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 	<section class="info pop" id="abt-tool">
 		<div>
 			<span class="x">x</span>
-			<h1>Riu <span>(v. <?php echo RIU_VER; ?>)</span></h1>
+			<h1>Riu <span>(v. <?php echo VER; ?>)</span></h1>
 			<div><?php echo RIU_DESC; ?></div>
 			<div><?php echo RIU_UNITS; ?></div>
 			<div style="text-align: center;">

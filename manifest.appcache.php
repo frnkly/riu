@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Francis Amankrah <frank@frnk.ca>
+ * @license https://www.mozilla.org/MPL/2.0/ Mozilla Public License v2.0
+ */
 
 // Headers
 header('Content-type: text/cache-manifest');
@@ -9,12 +13,13 @@ header('Cache-Control: no-cache, must-revalidate');
 require 'definitions.php';
 
 // Version
-$v	= RIU_VER ."\n";
+$v	= VER ."\n";
+$m	= $_SERVER['HTTP_HOST'] == 'localhost' ? time() : '2014-11-30 101';
 
 // See http://www.html5rocks.com/en/tutorials/appcache/beginner/
 ?>
 CACHE MANIFEST
-# 2014-11-10 103
+# <?php echo $m; ?>
 
 # Explicitly cached 'master entries'
 CACHE:

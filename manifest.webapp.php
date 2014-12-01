@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author Francis Amankrah <frank@frnk.ca>
+ * @license https://www.mozilla.org/MPL/2.0/ Mozilla Public License v2.0
+ */
+
+
 header('Content-type: application/x-web-app-manifest+json');
 header('Content-Disposition: attachment; filename="riu.webapp"');
 header('Cache-Control: no-cache, must-revalidate');

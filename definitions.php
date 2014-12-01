@@ -1,5 +1,21 @@
 <?php
+/**
+ * @author Francis Amankrah <frank@frnk.ca>
+ * @license https://www.mozilla.org/MPL/2.0/ Mozilla Public License v2.0
+ */
 
-define('RIU_VER', '0.7.3');
-define('RIU_DESC',	'Riu (the Really Intuitive Unit converter) is an interpretive unit converter that you can save to your phone or tablet and use offline. Type in some text and let this super simple tool do your conversion for you.');
-define('RIU_UNITS',	'Converts Area, Energy, Force, Length (or Distance), Mass (or Mass Flowrate), Momentum (or Impulse), Power, Pressure, Time, Velocity (or Speed) and Volume');
+/*
+ * App config
+ */
+
+const RIU_LINK	= 'http://frnk.ca/app/riu';
+const RIU_TITLE	= 'Riu - The Really Intuitive Unit converter';
+
+
+/*
+ * App constants
+ */
+
+const VER		= '0.7.4';
+const RIU_DESC	= 'Riu (the Really Intuitive Unit converter) is an interpretive unit converter that you can save to your phone or tablet and use offline. Type in some text and let this super simple tool do your conversion for you.';
+const RIU_UNITS	= 'Converts Area, Energy, Force, Length (or Distance), Mass (or Mass Flowrate), Momentum (or Impulse), Power, Pressure, Time, Velocity (or Speed) and Volume';

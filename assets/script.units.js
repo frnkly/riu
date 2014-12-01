@@ -2,7 +2,7 @@
  * Unit handling
  *
  * @author Francis Amankrah <frank@frnk.ca>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ * @license https://www.mozilla.org/MPL/2.0/ Mozilla Public License v2.0
  */
 
 var Units =
@@ -291,28 +291,29 @@ var Units =
 			
 			pJ : ['picojoule'],
 			nJ : ['nanojoule'],
-			uJ : ['µJ', 'microjoule'],
+			µJ : ['microjoule', 'uJ', 'uj'],
 			mJ : ['millijoule'],
-			J : ['j', 'joule'],
-			kJ : ['kj', 'kilojoule'],
-			MJ : ['mj', 'megajoule'],
-			GJ : ['gj', 'gigajoule'],
-			TJ : ['tj', 'terajoule'],
-			PJ : ['pj', 'petajoule'],
-			Wh : ['wh', 'watthour', 'watt-hour'],
-			kWh : ['kwh', 'kilowatthour', 'kilowatt-hour'],
-			MWh : ['mwh', 'megawatthour', 'megawatt-hour'],
-			GWh : ['gwh', 'gigawatthour', 'gigawatt-hour'],
-			TWh : ['twh', 'terawatthour', 'terawatt-hour'],
-			PWh : ['pwh', 'petawatthour', 'petawatt-hour'],
-			eV : ['ev', 'electronvolt', 'electronvolts'],
-			keV : ['kev', 'kiloelectronvolt'],
-			MeV : ['mev', 'megaelectronvolt'],
-			GeV : ['gev', 'gigaelectronvolt'],
-			TeV : ['tev', 'teraelectronvolt'],
-			PeV : ['pev', 'petaelectronvolt'],
+			J : ['joule', 'j'],
+			kJ : ['kilojoule', 'kj'],
+			MJ : ['megajoule', 'mj'],
+			GJ : ['gigajoule', 'gj'],
+			TJ : ['terajoule', 'tj'],
+			PJ : ['petajoule', 'pj'],
+			Wh : ['Watt-hour', 'watt-hour', 'watthour', 'watt·hour', 'wh'],
+			kWh : ['kilowatt-hour', 'kilowatthour', 'kilowatt·hour', 'kwh'],
+			MWh : ['megawatt-hour', 'megawatthour', 'megawatt·hour', 'mwh'],
+			GWh : ['gigawatt-hour', 'gigawatthour', 'gigawatt·hour', 'gwh'],
+			TWh : ['terawatt-hour', 'terawatthour', 'terawatt·hour', 'twh'],
+			PWh : ['petawatt-hour', 'petawatthour', 'petawatt·hour', 'pwh'],
+			eV : ['electronvolt', 'electron-volt', 'ev'],
+			keV : ['kilo-electronvolt', 'kiloelectronvolt', 'kev'],
+			MeV : ['mega-electronvolt', 'megaelectronvolt', 'mev'],
+			GeV : ['giga-electronvolt', 'gigaelectronvolt', 'gev'],
+			TeV : ['tera-electronvolt', 'teraelectronvolt', 'tev'],
+			PeV : ['peta-electronvolt', 'petaelectronvolt', 'pev'],
 			
-			BTU : ['btu']
+			Btu : ['British thermal unit', 'BTU', 'btu'],
+			'ft-lbs' : ['foot-pound', 'ftlbs', 'ft·lbs', 'lbs-ft', 'lbsft', 'lbs·ft']
 		},
 		
 		force : {
@@ -324,9 +325,9 @@ var Units =
 			fN : ['femtonewton'],
 			pN : ['piconewton'],
 			nN : ['nanonewton'],
-			uN : ['micronewton', 'µm'],
+			µN : ['micronewton', 'uN', 'un'],
 			mN : ['millinewton'],
-			N : ['newton', 'n'],
+			N : ['Newton', 'newton', 'n'],
 			kN : ['kilonewton', 'kn'],
 			MN : ['meganewton', 'mn'],
 			GN : ['giganewton', 'gn'],
@@ -334,10 +335,10 @@ var Units =
 			PN : ['petanewton', 'pn'],
 			
 			dyn : ['dyne'],
-			gf : ['gramforce', 'gram-force'],
-			kgf : ['kp', 'kilopond', 'kilogramforce', 'kilogram-force'],
-			kip : ['kipf', 'klbf', 'kipforce', 'kip-force'],
-			lbf : ['poundforce', 'pound-force'],
+			gf : ['gramforce', 'gram-force', 'gram·force'],
+			kgf : ['kilogram-force', 'kp', 'kilopond', 'kilogramforce', 'kilogram·force'],
+			kip : ['kip-force', 'kipf', 'klbf', 'kipforce'],
+			lbf : ['pound-force', 'poundforce'],
 			pdl : ['poundal']
 		},
 		
@@ -350,7 +351,7 @@ var Units =
 			fm : ['femtometer', 'femtometre'],
 			pm : ['picometer', 'picometre'],
 			nm : ['nanometer', 'nanometre'],
-			um : ['µm', 'micrometer', 'micrometre'],
+			µm : ['micrometer', 'micrometre', 'um'],
 			mm : ['millimeter', 'millimetre'],
 			cm : ['centimeter', 'centimetre'],
 			dm : ['decametre', 'dekametre', 'dam', 'dkm'],
@@ -375,12 +376,12 @@ var Units =
 			fg : ['femtogram'],
 			pg : ['picogram'],
 			ng : ['nanogram'],
-			ug : ['microgram', 'µg'],
+			µg : ['microgram', 'ug'],
 			mg : ['milligram'],
 			g : ['gram'],
 			kg : ['kilogram', 'kilo'],
 			Mg : ['megagram', 'mg'],
-			t : ['tonne'],
+			t : ['metric ton', 'tonne'],
 			Gg : ['gigagram', 'gg'],
 			Tg : ['teragram', 'tg'],
 			Pg : ['petagram'],
@@ -388,8 +389,8 @@ var Units =
 			oz : ['ounce'],
 			lbs : ['pound', 'lb'],
 			st : ['stone'],
-			'short ton' : ['short ton', 'ton'],
-			'long ton' : ['long ton', 'longton']
+			'short ton' : ['short-ton', 'shortton', 'ton'],
+			'long ton' : ['long-ton', 'longton']
 		},
 		
 		power : {
@@ -401,9 +402,9 @@ var Units =
 			fW : ['femtowatt', 'fw'],
 			pW : ['picowatt'],
 			nW : ['nanowatt', 'nw'],
-			uW : ['microwatt', 'uw', 'µW', 'µw'],
+			µW : ['microwatt', 'uw', 'uW', 'µw'],
 			mW : ['milliwatt'],
-			W : ['watt', 'w'],
+			W : ['Watt', 'watt', 'w'],
 			kW : ['kilowatt', 'kw'],
 			MW : ['megawatt', 'mw'],
 			GW : ['gigawatt', 'gw'],
@@ -412,7 +413,7 @@ var Units =
 				
 			'J/s' : ['joule/second', 'joules/second', 'joule/sec', 'joules/sec', 'j/s'],
 			'kJ/s' : ['kilojoule/second', 'kilojoules/second', 'kilojoule/sec', 'kilojoules/sec', 'kj/s'],
-			hp : ['horsepower'],
+			hp : ['horsepower', 'HP'],
 			'btu/hr' : ['btu/hour', 'btu/h'],
 			'btu/min' : ['btu/minute', 'btu/m'],
 			'btu/s' : ['btu/second', 'btu/sec']
@@ -427,7 +428,7 @@ var Units =
 			fPa : ['femtopascal', 'fpa'],
 			pPa : ['picopascal', 'ppa'],
 			nPa : ['nanopascal', 'npa'],
-			uPa : ['micropascal', 'upa', 'µPa', 'µpa'],
+			µPa : ['micropascal', 'upa', 'uPa', 'upa'],
 			mPa : ['millipascal'],
 			Pa : ['pascal', 'pa'],
 			kPa : ['kilopascal', 'kpa'],
@@ -444,7 +445,7 @@ var Units =
 			fbar : ['femtobar'],
 			pbar : ['picobar'],
 			nbar : ['nanobar'],
-			ubar : ['microbar', 'µbar'],
+			µbar : ['microbar', 'ubar'],
 			mbar : ['millibar'],
 			cbar : ['centibar'],
 			bar : ['bar'],
@@ -467,7 +468,7 @@ var Units =
 			fs : ['femtosecond', 'femto-second', 'fs'],
 			ps : ['picosecond', 'pico-second', 'ps'],
 			ns : ['nanosecond', 'nano-second', 'ns'],
-			us : ['microsecond', 'micro-second', 'us', 'µs'],
+			µs : ['microsecond', 'micro-second', 'us'],
 			ms : ['millisecond', 'milli-second'],
 			s : ['second'],
 			min : ['minute'],
@@ -533,7 +534,8 @@ var Units =
 				GeV : 6.241509e9,
 				TeV : 6.241509e6,
 				PeV : 6.241509e3,
-				BTU : 0.00094781712
+				BTU : 0.00094781712,
+				'ft-lbs' : 0.737562149277
 			},
 			
 			// Force
