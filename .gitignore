@@ -1,2 +1,6 @@
 # Analytics script
 analytics.php
+
+# Other unwanted files
+.htaccess
+Desktop.ini
