@@ -73,6 +73,7 @@ section:first-child div input {
     border-radius: 3px;
     box-shadow: 2px 2px 2px #ddd;
     cursor: pointer;
+    color: #333;
 }
 section:first-child div input:active {
     top: 1px;

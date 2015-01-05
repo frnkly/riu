@@ -64,9 +64,9 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
             <span class="result"></span>
             <input name="q" type="text" placeholder="e.g. 8 cm cubed in inches..." value="<?php echo $q; ?>" autocomplete="off" />
             <div class="controls">
-                <input name="clear" type="button" value="&#10005;" onclick="App.reset()" />
-                <input name="submit" type="button" value="&#9989;" onclick="App.go()" />
-                <input name="help" type="button" value="?" onclick="App.alert('.help')" />
+                <input name="clear" type="button" value="&#10008;" onclick="App.reset()" />
+                <input name="submit" type="button" value="&#10004;" onclick="App.go()" />
+                <input name="help" type="button" value="&#10071;" onclick="App.alert('.help')" />
             </div>
 		</form>
 	</section>
