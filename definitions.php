@@ -10,4 +10,4 @@ const RIU_UNITS	= 'Converts Area, Energy, Force, Length (or Distance), Mass (or 
 /**
  * Include version
  */
-define('VER', ($_SERVER['SERVER_NAME'] == 'localhost' ? time() : '1.0.0'));
+define('VER', ($_SERVER['SERVER_NAME'] == 'localhost' ? time() : '1.0.2'));
