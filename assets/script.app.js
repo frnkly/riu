@@ -7,40 +7,44 @@
 
 var App =
 {
+    /**
+     * Results object
+     */
 	Result: {},
+    
+    /**
+     * Regular expressions
+     */
 	Regex: {
 		query: /^([0-9\.,\s]+(?:\.[0-9]+)?)[ ]?([a-z\-\*\/\^0-9]+)[ ]?(?:[a-z\-*\/\^\s]+ )?([a-z\-*\/\^0-9]+)$/i,
 		queryFeet: /^([0-9]+)'\s?([0-9]+)?(?:"|'')?[ ]?(?:[a-z\-\/\^\s]+ )?([a-z\-]+)/i
 	},
-	
+    
 	init: function()
 	{
 		// Solve query
-		if ($('input[name="q"]').val().length > 0) this.go();
+        if (document.converter.q.value.trim().length > 0) this.go();
 		
 		// Reset form
 		else this.reset(true);
-		
-		// Welcome message
-		this.message('Riu.');
 	},
 	
 	go: function(i)
 	{
 		// Performance check
-		var q	= i || $('input[name="q"]').val();
+		var q	= i || document.converter.q.value.trim();
 		if (q.length < 1)
 			return this.abort('What do you want to convert?');
 		
 		// Analyse string
-		this.guess();
+		this.guess(q);
 		
 		// Display result
 		if (typeof this.Result == 'object')
 		{
 			// Format results, add link to explanation
-			var msg = this.Result.text +' <a href="#" onclick="App.box(\'#explanation-div\');">?</a>';
-			$('#explanation').html(this.Result.explanation);
+			var msg = this.Result.text +' <a href="#" class="explain" onclick="App.alert(\'.explanation\');">[?]</a>';
+            document.querySelector('.explanation-msg').innerHTML    = this.Result.explanation;
 			
 			// TODO: add notes
 			if (this.Result.note) {
@@ -51,10 +55,8 @@ var App =
 		}
 	},
 	
-	guess: function()
+	guess: function(q)
 	{
-		// Retrieve query
-		var q = $('input[name="q"]').val();
 		this.log('New query "'+ q +'"');
 		
 		// Remove whitespace and invalid characters
@@ -117,16 +119,27 @@ var App =
 		
 		return true;
 	},
+    
+    alert: function(selector) {
+        document.querySelector(selector).style.display   = 'inline-block';
+    },
+    
+    close: function(element) {
+        element.style.display   = 'none';
+    },
 	
-	message: function (m) {
-		if (typeof m == 'string')
-			$('#r').html(m);
-	},
+    message: function (m) {
+        if (typeof m == 'string')
+            document.querySelector('.result').innerHTML = m;
+    },
 	
 	reset: function(noFocus) {
 		this.message('Riu.');
 		this.Result	= {};
-		if (!noFocus) $('input[name="q"]').val('').focus();
+		if (!noFocus) {
+            document.converter.q.value  = '';
+            document.converter.q.focus();
+        }
 	},
 	
 	abort: function(msg, silent) {
@@ -144,48 +157,6 @@ var App =
 	}
 };
 
-App.box = function(id)
-{
-	// Performance check
-	if (!$(id).is(':hidden')) return;
-	
-	// Hide other boxes
-	$('.pop').hide();
-	
-	// Show this box
-	if ($(id).is(':hidden')) {
-		$(id).slideDown(300);
-	}
-	
-	// Hide this box
-	else {
-		$('.pop').hide();
-	}
-};
-
-// Initiate
-$(document).ready(function()
-{
-	// Initialize app
-	App.init();
-	
-	// About this tool
-	$('#tool').click(function() {
-		App.box('#abt-tool');
-	});
-	
-	// About the author
-	$('#author').click(function() {
-		App.box('#abt-author');
-	});
-	
-	// Go offline
-	$('#offline').click(function() {
-		App.box('#go-offline');
-	});
-	
-	// Close all info boxes
-	$('.pop').click(function() {
-		$('.pop').hide();
-	});
+document.addEventListener('DOMContentLoaded', function(event) {
+    App.init();
 });

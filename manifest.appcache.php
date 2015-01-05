@@ -12,9 +12,9 @@ header('Cache-Control: no-cache, must-revalidate');
 // Definitions
 require 'definitions.php';
 
-// Version
-$v	= VER ."\n";
-$m	= $_SERVER['HTTP_HOST'] == 'localhost' ? time() : '2014-11-30 101';
+// Manifest version
+$l  = $_SERVER['HTTP_HOST'] == 'localhost';
+$m	= $l ? time() : '2015-01-05 102';
 
 // See http://www.html5rocks.com/en/tutorials/appcache/beginner/
 ?>
@@ -25,20 +25,16 @@ CACHE MANIFEST
 CACHE:
 definitions.php
 index.php
-assets/style.app.min.css?<?php echo $v; ?>
-assets/script.app.min.js?<?php echo $v; ?>
-assets/script.units.min.js?<?php echo $v; ?>
-assets/32.more.png
-assets/32.w8.png
-assets/32.w8-inv-f7.png
-assets/64.conv-f7.png
-assets/r.ico
 assets/riu.70x70.png
 assets/riu.150x150.png
 assets/riu.310x310.png
+assets/riu.320x480.png
 assets/riu.transparent.144x144.png
+assets/riu.ico
+assets/style.app.min.css?<?php echo VER ."\n"; ?>
+assets/script.app.min.js?<?php echo VER ."\n"; ?>
+assets/script.units.min.js?<?php echo VER ."\n"; ?>
 http://fonts.googleapis.com/css?family=Lato:300
-http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js
 
 NETWORK:
 *

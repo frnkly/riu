@@ -100,12 +100,12 @@ var Units =
 				if (name == 'info') continue;
 				
 				// Check unit name and alternate names
-				if (str == name || ($.inArray(str, units[type][name]) > -1))
+				if (str == name || units[type][name].indexOf(str) > -1)
 					found.abbr = name;
 				
 				// Handle plurals
 				if (!skipPlurals && units[type].info.plural && !found.abbr && str.substr(str.length-1) == 's')
-					if ($.inArray(str.substr(0, str.length-1), units[type][name]) > -1)
+					if (units[type][name].indexOf(str.substr(0, str.length-1)) > -1)
 						found.abbr = name;
 				
 				// Save unit information
@@ -312,7 +312,7 @@ var Units =
 			TeV : ['tera-electronvolt', 'teraelectronvolt', 'tev'],
 			PeV : ['peta-electronvolt', 'petaelectronvolt', 'pev'],
 			
-			Btu : ['British thermal unit', 'BTU', 'btu'],
+			BTU : ['British thermal unit', 'BTU', 'Btu', 'btu'],
 			'ft-lbs' : ['foot-pound', 'ftlbs', 'ft·lbs', 'lbs-ft', 'lbsft', 'lbs·ft']
 		},
 		
