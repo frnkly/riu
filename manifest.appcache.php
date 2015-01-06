@@ -14,7 +14,7 @@ require 'definitions.php';
 
 // Manifest version
 $l  = $_SERVER['HTTP_HOST'] == 'localhost';
-$m	= $l ? time() : '2015-01-05 103';
+$m	= $l ? time() : '2015-01-05 104';
 
 // See http://www.html5rocks.com/en/tutorials/appcache/beginner/
 ?>

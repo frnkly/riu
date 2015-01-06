@@ -66,7 +66,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
             <div class="controls">
                 <input name="clear" type="button" value="&#10008;" onclick="App.reset()" />
                 <input name="submit" type="button" value="&#10004;" onclick="App.go()" />
-                <input name="help" type="button" value="&#10071;" onclick="App.alert('.help')" />
+                <input name="help" type="button" value="&#9731;" onclick="App.alert('.help')" />
             </div>
 		</form>
 	</section>
@@ -93,8 +93,7 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
             <div>To use this app offline, simply bookmark this page on your phone or tablet and add it to your homescreen.</div>
             <div><?php echo RIU_UNITS; ?></div>
             <div style="text-align: center;">
-                &copy; <?php echo date('Y'); ?> <a href="http://frnk.ca/" target="_blank">Francis Amankrah</a><br />
-                <a href="https://www.mozilla.org/MPL/2.0/" target="_blank">Mozilla Public License</a>
+                &copy; <?php echo date('Y'); ?> <a href="http://frnk.ca/" target="_blank">Francis Amankrah</a>
             </div>
         </div>
     </section>
