@@ -1,0 +1,16 @@
+{
+    "name": "Riu",
+    "description": "The Really Intuitive Unit Converter",
+    "launch_path": "/apps/riu/index.html",
+    "icons": {
+        "128": "/apps/riu/assets/riu.150x150.png",
+        "310": "/apps/riu/assets/riu.310x310.png"
+    },
+    "developer": {
+        "name": "Frank",
+        "url": "http://frnk.ca/"
+    },
+    "fullscreen": "true",
+    "type": "web",
+    "default_locale": "en"
+}
