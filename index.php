@@ -56,6 +56,10 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
 	<!-- Other scripts -->
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="assets/style.app.min.css?<?php echo VER; ?>" />
+<?php
+	// Include analytics code
+	file_exists('analytics.php') ? require 'analytics.php' : null;
+?>
 </head>
 <body>
 	
@@ -81,10 +85,6 @@ $q	= isset($_GET['q']) ? preg_replace('/[^0-9a-z\/\*\^\-\., ]/i', '', $_GET['q']
     
 	<script type="text/javascript" src="assets/script.app.min.js?<?php echo VER; ?>"></script>
 	<script type="text/javascript" src="assets/script.units.min.js?<?php echo VER; ?>"></script>
-<?php
-	// Include analytics code
-	file_exists('analytics.php') ? require 'analytics.php' : null;
-?>
     <section class="info help">
         <div>
 			<span onclick="return App.close(this.parentNode.parentNode)">&#10005;</span>
